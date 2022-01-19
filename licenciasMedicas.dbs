@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Caja de Compensación - Licencias Médicas" id="Project-1999" database="MariaDb" >
+	<comment><![CDATA[Administra y Gestiona Licencias Médicas]]></comment>
+	<schema name="adminLicencias" >
+		<table name="comuna" row_count="346" spec="" >
+			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="nombreComuna" type="varchar" length="64" jt="12" mandatory="y" />
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idComuna" />
+			</index>
+			<index name="idProvincia" unique="NORMAL" >
+				<column name="idProvincia" />
+			</index>
+			<fk name="comuna_ibfk_1" to_schema="adminLicencias" to_table="provincia" >
+				<fk_column name="idProvincia" pk="idProvincia" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=347 DEFAULT CHARSET=utf8]]></options>
+		</table>
+		<table name="empresa" row_count="0" spec="" >
+			<column name="idEmpresa" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="rutEmpresa" type="varchar" length="10" jt="12" mandatory="y" />
+			<column name="razonSocial" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="domicilio" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idEmpresa" />
+			</index>
+			<index name="idComuna" unique="NORMAL" >
+				<column name="idComuna" />
+			</index>
+			<fk name="empresa_ibfk_1" to_schema="adminLicencias" to_table="comuna" >
+				<fk_column name="idComuna" pk="idComuna" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="especialidad" row_count="38" spec="" >
+			<column name="idEspecialidad" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="nombreEspecialidad" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idEspecialidad" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia" row_count="0" spec="" >
+			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="idEmpresa" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idLicenciaFormaPresenta" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idSucursal" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="fechaInicio" type="date" jt="91" mandatory="y" />
+			<column name="fechaTermino" type="date" jt="91" mandatory="y" />
+			<column name="diagnostico" type="varchar" length="300" jt="12" mandatory="y" />
+			<column name="idMedico" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicencia" />
+			</index>
+			<index name="idSucursal" unique="NORMAL" >
+				<column name="idSucursal" />
+			</index>
+			<index name="idLicenciaTipo" unique="NORMAL" >
+				<column name="idLicenciaTipo" />
+			</index>
+			<index name="idLicenciaFormaPresenta" unique="NORMAL" >
+				<column name="idLicenciaFormaPresenta" />
+			</index>
+			<index name="idTrabajador" unique="NORMAL" >
+				<column name="idTrabajador" />
+			</index>
+			<index name="idEmpresa" unique="NORMAL" >
+				<column name="idEmpresa" />
+			</index>
+			<index name="idMedico" unique="NORMAL" >
+				<column name="idMedico" />
+			</index>
+			<fk name="licencia_ibfk_1" to_schema="adminLicencias" to_table="sucursal" >
+				<fk_column name="idSucursal" pk="idSucursal" />
+			</fk>
+			<fk name="licencia_ibfk_2" to_schema="adminLicencias" to_table="licencia_Tipo" >
+				<fk_column name="idLicenciaTipo" pk="idLicenciaTipo" />
+			</fk>
+			<fk name="licencia_ibfk_3" to_schema="adminLicencias" to_table="licencia_FormaPresenta" >
+				<fk_column name="idLicenciaFormaPresenta" pk="idLicenciaFormaPresenta" />
+			</fk>
+			<fk name="licencia_ibfk_4" to_schema="adminLicencias" to_table="trabajador" >
+				<fk_column name="idTrabajador" pk="idTrabajador" />
+			</fk>
+			<fk name="licencia_ibfk_5" to_schema="adminLicencias" to_table="empresa" >
+				<fk_column name="idEmpresa" pk="idEmpresa" />
+			</fk>
+			<fk name="licencia_ibfk_6" to_schema="adminLicencias" to_table="licencia_Tramite" >
+				<fk_column name="idLicencia" pk="idLicenciaTramite" />
+			</fk>
+			<fk name="licencia_ibfk_7" to_schema="adminLicencias" to_table="medico" >
+				<fk_column name="idMedico" pk="idMedico" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_Documento" row_count="13" spec="" >
+			<column name="idLicenciaDocumento" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="describeLicenciaDocumento" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicenciaDocumento" />
+			</index>
+			<index name="idLicenciaTipo" unique="NORMAL" >
+				<column name="idLicenciaTipo" />
+			</index>
+			<fk name="licencia_Documento_ibfk_1" to_schema="adminLicencias" to_table="licencia_Tipo" >
+				<fk_column name="idLicenciaTipo" pk="idLicenciaTipo" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_FormaPresenta" row_count="3" spec="" >
+			<column name="idLicenciaFormaPresenta" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="describeLicenciaFormaPresenta" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicenciaFormaPresenta" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_Rechazada" spec="" >
+			<column name="idLicenciaRechazada" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" />
+			<column name="idRechazoCausal" type="int" length="11" jt="4" mandatory="y" />
+			<column name="fechaRechazo" type="datetime" jt="93" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicenciaRechazada" />
+			</index>
+			<index name="idLicencia" unique="NORMAL" >
+				<column name="idLicencia" />
+			</index>
+			<index name="idRechazoCausal" unique="NORMAL" >
+				<column name="idRechazoCausal" />
+			</index>
+			<fk name="licencia_rechazada_ibfk_1" to_schema="adminLicencias" to_table="licencia" >
+				<fk_column name="idLicencia" pk="idLicencia" />
+			</fk>
+			<fk name="licencia_rechazada_ibfk_2" to_schema="adminLicencias" to_table="rechazo_Causal" >
+				<fk_column name="idRechazoCausal" pk="idRechazoCausal" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_Tipo" row_count="4" spec="" >
+			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="describeLicenciaTipo" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicenciaTipo" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_Tramite" row_count="0" spec="" >
+			<column name="idLicenciaTramite" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" />
+			<column name="fechaTramite" type="date" jt="91" mandatory="y" />
+			<column name="idLicenciaWorkflow" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicenciaTramite" />
+			</index>
+			<index name="idLicencia" unique="NORMAL" >
+				<column name="idLicencia" />
+			</index>
+			<index name="idLicenciaWorkflow" unique="NORMAL" >
+				<column name="idLicenciaWorkflow" />
+			</index>
+			<fk name="licencia_Tramite_ibfk_1" to_schema="adminLicencias" to_table="licencia" >
+				<fk_column name="idLicencia" pk="idLicencia" />
+			</fk>
+			<fk name="licencia_Tramite_ibfk_2" to_schema="adminLicencias" to_table="licencia_Workflow" >
+				<fk_column name="idLicenciaWorkflow" pk="idLicenciaWorkflow" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_Workflow" spec="" >
+			<column name="idLicenciaWorkflow" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="describeLicenciaWorkFlow" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="idProcesoSiguiente" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicenciaWorkflow" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="medico" row_count="0" spec="" >
+			<column name="idMedico" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="nombreMedico" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="idEspecialidad" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idMedico" />
+			</index>
+			<index name="idEspecialidad" unique="NORMAL" >
+				<column name="idEspecialidad" />
+			</index>
+			<fk name="medico_ibfk_1" to_schema="adminLicencias" to_table="especialidad" >
+				<fk_column name="idEspecialidad" pk="idEspecialidad" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="provincia" row_count="54" spec="" >
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="nombreProvincia" type="varchar" length="64" jt="12" mandatory="y" />
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idProvincia" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8]]></options>
+		</table>
+		<table name="rechazo_Causal" row_count="7" spec="" >
+			<column name="idRechazoCausal" type="int" length="11" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="decribeRechazoCausal" type="varchar" length="50" jt="12" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idRechazoCausal" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="region" row_count="16" spec="" >
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="nombreRegion" type="varchar" length="64" jt="12" mandatory="y" />
+			<column name="ordinalRegion" type="varchar" length="4" jt="12" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idRegion" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8]]></options>
+		</table>
+		<table name="sucursal" row_count="0" spec="" >
+			<column name="idSucursal" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="describeSucursal" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" />
+			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idSucursal" />
+			</index>
+			<index name="idRegion" unique="NORMAL" >
+				<column name="idRegion" />
+			</index>
+			<index name="idProvincia" unique="NORMAL" >
+				<column name="idProvincia" />
+			</index>
+			<index name="idComuna" unique="NORMAL" >
+				<column name="idComuna" />
+			</index>
+			<fk name="sucursal_ibfk_1" to_schema="adminLicencias" to_table="region" >
+				<fk_column name="idRegion" pk="idRegion" />
+			</fk>
+			<fk name="sucursal_ibfk_2" to_schema="adminLicencias" to_table="provincia" >
+				<fk_column name="idProvincia" pk="idProvincia" />
+			</fk>
+			<fk name="sucursal_ibfk_3" to_schema="adminLicencias" to_table="comuna" >
+				<fk_column name="idComuna" pk="idComuna" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="trabajador" row_count="0" spec="" >
+			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="rutTrabajador" type="varchar" length="10" jt="12" mandatory="y" />
+			<column name="nombreTrabajador" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="domicilio" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" />
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" />
+			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" />
+			<column name="fechaNacimiento" type="date" jt="91" mandatory="y" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idTrabajador" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="trabajador_Afiliado" spec="" >
+			<column name="idTrabajadorAfiliado" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="fechaInicio" type="date" jt="91" mandatory="y" />
+			<column name="fechaTermino" type="date" jt="91" />
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idTrabajadorAfiliado" />
+			</index>
+			<index name="idTrabajador" unique="NORMAL" >
+				<column name="idTrabajador" />
+			</index>
+			<fk name="trabajador_afiliado_ibfk_1" to_schema="adminLicencias" to_table="trabajador" >
+				<fk_column name="idTrabajador" pk="idTrabajador" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<procedure name="sp_EstadisticasTipoLicencia" id="Procedure-2482" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  PROCEDURE `sp_EstadisticasTipoLicencia`()
+BEGIN
+		/*
+			Se Pide: Estadisticas de Licencias del tipo Manual, electronica y mixta
+		*/
+		
+		SELECT  t.describeLicenciaTipo	,
+			COUNT(*) AS tipoLicencia
+		FROM   licencia l
+		INNER JOIN licencia_Tipo t ON l.idLicenciaTipo = t.idLicenciaTipo
+		GROUP BY l.idLicenciaTipo
+		ORDER BY t.describeLicenciaTipo ;
+    END]]></string>
+		</procedure>
+		<procedure name="sp_TopEmpresasPresentanLicencias" id="Procedure-1ea7" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  PROCEDURE `sp_TopEmpresasPresentanLicencias`()
+BEGIN
+		/*
+			Se Pide: Top de Empresas que sus Trabajadores presenten mas licencias
+		*/
+		
+		SELECT e.razonSocial	,
+		       e.rutEmpresa	,
+		       ( SELECT COUNT(*)
+			 FROM licencia l
+			 WHERE l.idEmpresa = e.idEmpresa ) AS numeroLicencias
+		FROM empresa e
+		ORDER BY numeroLicencias DESC ;
+    END]]></string>
+		</procedure>
+	</schema>
+	<connector name="MariaDb" database="MariaDb" driver_class="org.mariadb.jdbc.Driver" driver_jar="mariadb-java-client-2.7.2.jar" driver_desc="Standard" host="10.8.106.181" port="3306" user="admin" passwd="YWRtaW4uMjE=" />
+	<layout name="Licencia Medica" id="Layout-1b31" show_column_type="y" show_relation="columns" >
+		<entity schema="adminLicencias" name="comuna" color="BED3F4" x="48" y="224" />
+		<entity schema="adminLicencias" name="empresa" color="BED3F4" x="864" y="384" />
+		<entity schema="adminLicencias" name="especialidad" color="BED3F4" x="1008" y="160" />
+		<entity schema="adminLicencias" name="licencia" color="BED3F4" x="560" y="336" />
+		<entity schema="adminLicencias" name="licencia_Documento" color="C7F4BE" x="1152" y="272" />
+		<entity schema="adminLicencias" name="licencia_FormaPresenta" color="C7F4BE" x="352" y="592" />
+		<entity schema="adminLicencias" name="licencia_Rechazada" color="3986C1" x="528" y="768" />
+		<entity schema="adminLicencias" name="licencia_Tipo" color="C7F4BE" x="912" y="560" />
+		<entity schema="adminLicencias" name="licencia_Tramite" color="C7F4BE" x="688" y="592" />
+		<entity schema="adminLicencias" name="licencia_Workflow" color="3986C1" x="976" y="704" />
+		<entity schema="adminLicencias" name="medico" color="BED3F4" x="864" y="256" />
+		<entity schema="adminLicencias" name="provincia" color="BED3F4" x="272" y="224" />
+		<entity schema="adminLicencias" name="rechazo_Causal" color="BED3F4" x="1152" y="384" />
+		<entity schema="adminLicencias" name="region" color="BED3F4" x="256" y="336" />
+		<entity schema="adminLicencias" name="sucursal" color="BED3F4" x="688" y="48" />
+		<entity schema="adminLicencias" name="trabajador" color="BED3F4" x="80" y="464" />
+		<entity schema="adminLicencias" name="trabajador_Afiliado" color="3986C1" x="288" y="704" />
+		<script name="SQL Editor" id="Editor-169a" language="SQL" >
+			<string><![CDATA[SELECT comuna_id, comuna_nombre, provincia_id
+FROM
+	`adminLicencias`.comuna a;]]></string>
+		</script>
+		<browser id="Browse-23a3" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="adminLicencias" entity="comuna" x="20" y="20" width="400" height="300" />
+		</browser>
+		<query id="Query-810" name="Query Builder" >
+			<query_table schema="adminLicencias" name="comuna" alias="c" x="48" y="48" />
+		</query>
+		<form name="Analytic Application" id="Report-d46" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Comuna Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="label" name="Each cell (rectangle) may contain one component. Double-click cells to edit.&#10;&lt;br&gt;Tables are embedded components, with their own cells.&#10;&lt;br&gt;Use the cell context menu to insert new rows, columns or merge cells." pos="0,1,3,1,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,2,4,2,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="comuna_id" type="4" />
+						<var name="comuna_nombre" />
+						<var name="provincia_id" type="4" />
+						<script ><![CDATA[SELECT * FROM `adminLicencias`.comuna]]></script>
+					</form_script>
+					<param name="i0" value="comuna_nombre" />
+					<param name="width" value="100%" />
+					<param name="v0" value="provincia_id" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,3,4,3,f,f" layout="{{-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="comuna_id" type="4" />
+						<var name="comuna_nombre" />
+						<var name="provincia_id" type="4" />
+						<script ><![CDATA[SELECT * FROM `adminLicencias`.comuna]]></script>
+					</form_script>
+					<cell type="label" name="comuna_id" pos="0,0,0,0,c,c" />
+					<cell type="label" name="comuna_nombre" pos="1,0,1,0,c,c" />
+					<cell type="label" name="provincia_id" pos="2,0,2,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="3,0,3,0,c,c" />
+					<cell type="label" name="${comuna_id}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${comuna_nombre}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${provincia_id}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-default btn-success" pos="3,1,3,1,c,c" ref_id="Report-d46" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,4,0,4,l,c" glyph="FA-ANGLE_DOUBLE_LEFT" ref_id="Report-d46" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,4,1,4,l,c" glyph="FA-ANGLE_LEFT" ref_id="Report-d46" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,4,2,4,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,4,3,4,l,c" glyph="FA-ANGLE_RIGHT" ref_id="Report-d46" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>
