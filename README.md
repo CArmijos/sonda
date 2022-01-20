@@ -18,3 +18,50 @@ Las Licencias Médicas permiten que el trabajador se ausente de su trabajo, cuan
 - Enfermedad grave del niño menor de un año
 
 ![](https://github.com/CArmijos/sonda/blob/master/proceso_licenciaMedica.png)
+
+
+#### ESTRUCTURA DEFINICIÓN BASE DE DATOS
+![](https://github.com/CArmijos/sonda/blob/master/Procesos Base de Datos.png)
+
+#### DESARROLLO DEL QUIZ Nº2
+###### PROCEDIMIENTOS ALMACENADOS
+
+- A - sp_TopEmpresasPresentanLicencias
+- B - sp_SucursalMasDocumentosSucursalNoApta
+- C - sp_TopDocumentosReiniciaFlujo
+- D - sp_Tiempos_Promedio_Min_Max_Tramite
+- E - sp_EstadisticasTipoLicencia
+- F - sp_ProcesoAlmacenaMayorCantidadLicencias
+- G - sp_TrabajadoreLicenciaDesafiliados
+- H - Ver Anexo
+
+##### ANEXO Letra H
+
+El manejo de la Data Histórica se debe consultar en LOG_licencia, el responsable de la Transacción está identificado con idUsuario y este atributo se relaciona con Tabla Usuario.
+
+Los Cambios quedan registrados en Tabla licencia_Tramite
+
+Los Procedimientos Almacenados deben de ejecutarse de la siguiente forma:
+
+call nombre_del_procedimiento()
+
+#### DIAGRAMA DE LA ELABORACIÓN DEL PUNTO Nº2
+![](https://github.com/CArmijos/sonda/blob/master/DiagramaModelo_licenciaMedica.jpg)
+
+##### TECNOLOGIA
+
+| Base de Datos | MariaDB v10.6.4|
+
+#### ENTREGABLES
+
+- Diagrama de la Elaboración del Punto Nº2 
+- licenciasMedicas.dbs – Archivo con Modelo - DbSchema
+- Repositorio GIT  Documentación y Querys 
+- Diccionario de Datos –adminLicencia.HTML
+- Vista Estructura Base de Datos – Proceso Base de Datos.png 
+- Base de Datos adminLicencias.SQL
+- Procedimientos Almacenados –sp_LM.SQL
+- CarlosArmijoSeverino_Respuestas_ANEXO N  - licenciasMedicas.PDF
+- CarlosArmijoSeverino_Respuestas_ANEXO N Quiz BD.PDF
+- Base de Datos challengedb.sql - Arriendos
+
