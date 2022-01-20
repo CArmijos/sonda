@@ -23,8 +23,19 @@ Las Licencias Médicas permiten que el trabajador se ausente de su trabajo, cuan
 #### ESTRUCTURA DEFINICIÓN BASE DE DATOS
 ![](https://github.com/CArmijos/sonda/blob/master/ProcesosBaseDeDatos.png)
 
-#### DESARROLLO DEL QUIZ Nº2
-###### PROCEDIMIENTOS ALMACENADOS
+#### DESARROLLO DEL QUIZ Nº2 
+
+###### Nº1 - DE ACUERDO AL AIGUIENTE DIAGRAMA RESOLVER QUERY`S
+ ![](https://github.com/CArmijos/sonda/blob/master/arriendos_ModeloDatos.png)
+
+- A - sp_ArriendoVendeProximoMes
+- B - sp_PropiedadesSinArrendar
+- C - sp_PropiedadesPorPropietarioPais
+- D - sp_PropietarioArrendador
+- E - sp_PropiedadesPorPropietarioPais
+
+
+###### Nº2 - PROCEDIMIENTOS ALMACENADOS MODELAMIENTO DE DATOS 
 
 - A - sp_TopEmpresasPresentanLicencias
 - B - sp_SucursalMasDocumentosSucursalNoApta
