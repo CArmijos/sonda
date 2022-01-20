@@ -33,7 +33,8 @@ Las Licencias Médicas permiten que el trabajador se ausente de su trabajo, cuan
 - C - sp_PropiedadesPorPropietarioPais
 - D - sp_PropietarioArrendador
 - E - sp_PropiedadesPorPropietarioPais
-
+- F - sp_ArrendatariosArriendoFueraChile
+- G - sp_Promedio_Minimo_Maximo
 
 ###### Nº2 - PROCEDIMIENTOS ALMACENADOS MODELAMIENTO DE DATOS 
 
