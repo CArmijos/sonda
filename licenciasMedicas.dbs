@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="Caja de Compensación - Licencias Médicas" id="Project-1999" database="MariaDb" >
 	<comment><![CDATA[Administra y Gestiona Licencias Médicas]]></comment>
-	<schema name="adminLicencias" >
+	<schema name="adminlicencias" >
 		<table name="comuna" row_count="346" spec="" >
 			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Id Del Registro]]></comment>
 			</column>
-			<column name="nombreComuna" type="varchar" length="64" jt="12" mandatory="y" />
-			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" />
+			<column name="nombreComuna" type="varchar" length="64" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre de la Comuna]]></comment>
+			</column>
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" >
+				<comment><![CDATA[Id Relaciona a la Provincia a que pertenece]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idComuna" />
 			</index>
 			<index name="idProvincia" unique="NORMAL" >
 				<column name="idProvincia" />
 			</index>
-			<fk name="comuna_ibfk_1" to_schema="adminLicencias" to_table="provincia" >
+			<fk name="comuna_ibfk_1" to_schema="adminlicencias" to_table="provincia" >
 				<fk_column name="idProvincia" pk="idProvincia" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=347 DEFAULT CHARSET=utf8]]></options>
@@ -22,20 +27,33 @@
 		<table name="empresa" row_count="0" spec="" >
 			<column name="idEmpresa" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Id del Registro]]></comment>
 			</column>
-			<column name="rutEmpresa" type="varchar" length="10" jt="12" mandatory="y" />
-			<column name="razonSocial" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="domicilio" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="rutEmpresa" type="varchar" length="10" jt="12" mandatory="y" >
+				<comment><![CDATA[Rut de la Empresa]]></comment>
+			</column>
+			<column name="razonSocial" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Razón Social de la Empresa]]></comment>
+			</column>
+			<column name="domicilio" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Domicilio de la Empresa Calle, Numero, etc]]></comment>
+			</column>
+			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id de la Comuna se relaciona con Tabla comuna]]></comment>
+			</column>
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id de la Region se relaciona con Tabla region]]></comment>
+			</column>
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id de la Provincia se relaciona con Tabla Provincia]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idEmpresa" />
 			</index>
 			<index name="idComuna" unique="NORMAL" >
 				<column name="idComuna" />
 			</index>
-			<fk name="empresa_ibfk_1" to_schema="adminLicencias" to_table="comuna" >
+			<fk name="empresa_ibfk_1" to_schema="adminlicencias" to_table="comuna" >
 				<fk_column name="idComuna" pk="idComuna" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
@@ -43,8 +61,11 @@
 		<table name="especialidad" row_count="38" spec="" >
 			<column name="idEspecialidad" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Especialidades]]></comment>
 			</column>
-			<column name="nombreEspecialidad" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="nombreEspecialidad" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[nombre de la especialidad]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idEspecialidad" />
 			</index>
@@ -53,16 +74,35 @@
 		<table name="licencia" row_count="0" spec="" >
 			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Licencia Medica]]></comment>
 			</column>
-			<column name="idEmpresa" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="idLicenciaFormaPresenta" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="idSucursal" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="fechaInicio" type="date" jt="91" mandatory="y" />
-			<column name="fechaTermino" type="date" jt="91" mandatory="y" />
-			<column name="diagnostico" type="varchar" length="300" jt="12" mandatory="y" />
-			<column name="idMedico" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idEmpresa" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Id Empresa, relaciona con tabla Empresa]]></comment>
+			</column>
+			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Trabajador, relaciona Tabla Trabajador]]></comment>
+			</column>
+			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Tipo Licencia, relaciona con Tabla Licencia_Tipo]]></comment>
+			</column>
+			<column name="idLicenciaFormaPresenta" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Forma de como se presenta la licencia]]></comment>
+			</column>
+			<column name="idSucursal" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Sucursal, corresponde a la identificación de la sucursal que gestiona el proceso, se relacion con tabla sucursal]]></comment>
+			</column>
+			<column name="fechaInicio" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha indica cuando se inicia el periodo de la licencia]]></comment>
+			</column>
+			<column name="fechaTermino" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha indica cuando se termina el periodo de la licencia]]></comment>
+			</column>
+			<column name="diagnostico" type="varchar" length="300" jt="12" mandatory="y" >
+				<comment><![CDATA[Se Almacena el Diagnósticio]]></comment>
+			</column>
+			<column name="idMedico" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Id medico identifica al médico que otorgó la licencia, se relaciona con tabla Médico]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idLicencia" />
 			</index>
@@ -84,63 +124,125 @@
 			<index name="idMedico" unique="NORMAL" >
 				<column name="idMedico" />
 			</index>
-			<fk name="licencia_ibfk_1" to_schema="adminLicencias" to_table="sucursal" >
+			<fk name="licencia_ibfk_1" to_schema="adminlicencias" to_table="sucursal" >
 				<fk_column name="idSucursal" pk="idSucursal" />
 			</fk>
-			<fk name="licencia_ibfk_2" to_schema="adminLicencias" to_table="licencia_Tipo" >
+			<fk name="licencia_ibfk_2" to_schema="adminlicencias" to_table="licencia_tipo" >
 				<fk_column name="idLicenciaTipo" pk="idLicenciaTipo" />
 			</fk>
-			<fk name="licencia_ibfk_3" to_schema="adminLicencias" to_table="licencia_FormaPresenta" >
+			<fk name="licencia_ibfk_3" to_schema="adminlicencias" to_table="licencia_formapresenta" >
 				<fk_column name="idLicenciaFormaPresenta" pk="idLicenciaFormaPresenta" />
 			</fk>
-			<fk name="licencia_ibfk_4" to_schema="adminLicencias" to_table="trabajador" >
+			<fk name="licencia_ibfk_4" to_schema="adminlicencias" to_table="trabajador" >
 				<fk_column name="idTrabajador" pk="idTrabajador" />
 			</fk>
-			<fk name="licencia_ibfk_5" to_schema="adminLicencias" to_table="empresa" >
+			<fk name="licencia_ibfk_5" to_schema="adminlicencias" to_table="empresa" >
 				<fk_column name="idEmpresa" pk="idEmpresa" />
 			</fk>
-			<fk name="licencia_ibfk_6" to_schema="adminLicencias" to_table="licencia_Tramite" >
+			<fk name="licencia_ibfk_6" to_schema="adminlicencias" to_table="licencia_tramite" >
 				<fk_column name="idLicencia" pk="idLicenciaTramite" />
 			</fk>
-			<fk name="licencia_ibfk_7" to_schema="adminLicencias" to_table="medico" >
+			<fk name="licencia_ibfk_7" to_schema="adminlicencias" to_table="medico" >
 				<fk_column name="idMedico" pk="idMedico" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
-		<table name="licencia_Documento" row_count="13" spec="" >
+		<table name="licencia_documento" prior="licencia_Documento" row_count="13" spec="" >
 			<column name="idLicenciaDocumento" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id del documento]]></comment>
 			</column>
-			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="describeLicenciaDocumento" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Tipo de Licencia - Referencia Plantilla de documentos según tipo de licencia]]></comment>
+			</column>
+			<column name="describeLicenciaDocumento" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre del documento a Solicitar]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idLicenciaDocumento" />
 			</index>
 			<index name="idLicenciaTipo" unique="NORMAL" >
 				<column name="idLicenciaTipo" />
 			</index>
-			<fk name="licencia_Documento_ibfk_1" to_schema="adminLicencias" to_table="licencia_Tipo" >
+			<fk name="licencia_Documento_ibfk_1" to_schema="adminlicencias" to_table="licencia_tipo" >
 				<fk_column name="idLicenciaTipo" pk="idLicenciaTipo" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
-		<table name="licencia_FormaPresenta" row_count="3" spec="" >
+		<table name="licencia_documentorechazado" spec="" >
+			<column name="idDocumentoRechazado" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Documento Rechazado]]></comment>
+			</column>
+			<column name="idDocumentoPresentado" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Documento Presentado, relaciona con tabla referencial Documentos Presentados]]></comment>
+			</column>
+			<column name="idCausalRechazo" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Causal Rechazo... Se relaciona con Tabla Referencial rechazo de Documentos]]></comment>
+			</column>
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idDocumentoRechazado" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_documentospresentados" spec="" >
+			<column name="idDocumentosPresentado" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Registro Documentos Presentados]]></comment>
+			</column>
+			<column name="idLicencia" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id licencia, se relaciona con la Licencia medica y asocia los documentos a la licenci]]></comment>
+			</column>
+			<column name="idLicenciaDocumento" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id documento, se relaciona con tabla referencia  documentos que se presentan]]></comment>
+			</column>
+			<column name="fechaPresentacion" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha de Presentaci{on del Documento...]]></comment>
+			</column>
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idDocumentosPresentado" />
+			</index>
+			<index name="idLicencia" unique="NORMAL" >
+				<column name="idLicencia" />
+			</index>
+			<index name="idLicenciaDocumento" unique="NORMAL" >
+				<column name="idLicenciaDocumento" />
+			</index>
+			<fk name="licencia_documentospresentados_ibfk_1" to_schema="adminlicencias" to_table="licencia" >
+				<fk_column name="idLicencia" pk="idSucursal" />
+			</fk>
+			<fk name="licencia_documentospresentados_ibfk_2" to_schema="adminlicencias" to_table="licencia_documento" >
+				<fk_column name="idLicenciaDocumento" pk="idLicenciaDocumento" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="licencia_formapresenta" prior="licencia_FormaPresenta" row_count="3" spec="" >
 			<column name="idLicenciaFormaPresenta" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Forma Presenta documento]]></comment>
 			</column>
-			<column name="describeLicenciaFormaPresenta" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="describeLicenciaFormaPresenta" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[describre forma de presentación de la licencia]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idLicenciaFormaPresenta" />
 			</index>
 			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
-		<table name="licencia_Rechazada" spec="" >
+		<table name="licencia_rechazada" prior="licencia_Rechazada" spec="" >
 			<column name="idLicenciaRechazada" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id del registro que contiene las licencias rechazadas]]></comment>
 			</column>
-			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" />
-			<column name="idRechazoCausal" type="int" length="11" jt="4" mandatory="y" />
-			<column name="fechaRechazo" type="datetime" jt="93" mandatory="y" />
+			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Licencia, lo relaciona con la Licencia médica]]></comment>
+			</column>
+			<column name="idRechazoCausal" type="int" length="11" jt="4" mandatory="y" >
+				<comment><![CDATA[id causal de rechazo]]></comment>
+			</column>
+			<column name="fechaRechazo" type="datetime" jt="93" mandatory="y" >
+				<comment><![CDATA[Fecha del rechazo de licencia medica]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idLicenciaRechazada" />
 			</index>
@@ -150,31 +252,41 @@
 			<index name="idRechazoCausal" unique="NORMAL" >
 				<column name="idRechazoCausal" />
 			</index>
-			<fk name="licencia_rechazada_ibfk_1" to_schema="adminLicencias" to_table="licencia" >
+			<fk name="licencia_rechazada_ibfk_1" to_schema="adminlicencias" to_table="licencia" >
 				<fk_column name="idLicencia" pk="idLicencia" />
 			</fk>
-			<fk name="licencia_rechazada_ibfk_2" to_schema="adminLicencias" to_table="rechazo_Causal" >
+			<fk name="licencia_Rechazada_ibfk_2" to_schema="adminlicencias" to_table="rechazo_licencia_causal" >
 				<fk_column name="idRechazoCausal" pk="idRechazoCausal" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
-		<table name="licencia_Tipo" row_count="4" spec="" >
+		<table name="licencia_tipo" prior="licencia_Tipo" row_count="4" spec="" >
 			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Tipo de Licencia]]></comment>
 			</column>
-			<column name="describeLicenciaTipo" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="describeLicenciaTipo" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Describe el tipo de Licencia]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idLicenciaTipo" />
 			</index>
 			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
-		<table name="licencia_Tramite" row_count="0" spec="" >
+		<table name="licencia_tramite" prior="licencia_Tramite" row_count="0" spec="" >
 			<column name="idLicenciaTramite" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Id del Tramite]]></comment>
 			</column>
-			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" />
-			<column name="fechaTramite" type="date" jt="91" mandatory="y" />
-			<column name="idLicenciaWorkflow" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Id de la Licencia se relaciona con el registro de licencia médica]]></comment>
+			</column>
+			<column name="fechaTramite" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha en que se realiza el trámite]]></comment>
+			</column>
+			<column name="idLicenciaWorkflow" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Workflow - Se relaciona con Tabla Referencial licencia_Workflow - esta tiene definido el flujo del proceso]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idLicenciaTramite" />
 			</index>
@@ -184,38 +296,131 @@
 			<index name="idLicenciaWorkflow" unique="NORMAL" >
 				<column name="idLicenciaWorkflow" />
 			</index>
-			<fk name="licencia_Tramite_ibfk_1" to_schema="adminLicencias" to_table="licencia" >
+			<fk name="licencia_Tramite_ibfk_1" to_schema="adminlicencias" to_table="licencia" >
 				<fk_column name="idLicencia" pk="idLicencia" />
 			</fk>
-			<fk name="licencia_Tramite_ibfk_2" to_schema="adminLicencias" to_table="licencia_Workflow" >
+			<fk name="licencia_Tramite_ibfk_2" to_schema="adminlicencias" to_table="licencia_workflow" >
 				<fk_column name="idLicenciaWorkflow" pk="idLicenciaWorkflow" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
-		<table name="licencia_Workflow" spec="" >
+		<table name="licencia_workflow" prior="licencia_Workflow" spec="" >
 			<column name="idLicenciaWorkflow" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id del WorkFlow]]></comment>
 			</column>
-			<column name="describeLicenciaWorkFlow" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="idProcesoSiguiente" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="describeLicenciaWorkFlow" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Describe el proceso]]></comment>
+			</column>
+			<column name="idProcesoSiguiente" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Proceso, siguiente paso]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idLicenciaWorkflow" />
 			</index>
 			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
+		<table name="log_licencia" spec="" >
+			<column name="idLicenciaLog" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Licencia Medica]]></comment>
+			</column>
+			<column name="idLicencia" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" />
+			<column name="idEmpresa" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Id Empresa, relaciona con tabla Empresa]]></comment>
+			</column>
+			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Trabajador, relaciona Tabla Trabajador]]></comment>
+			</column>
+			<column name="idLicenciaTipo" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Tipo Licencia, relaciona con Tabla Licencia_Tipo]]></comment>
+			</column>
+			<column name="idLicenciaFormaPresenta" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Forma de como se presenta la Licencia]]></comment>
+			</column>
+			<column name="idSucursal" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Sucursal, corresponde a la identificación de la sucursal que gestiona el proceso, se relacion con tabla sucursal]]></comment>
+			</column>
+			<column name="fechaInicio" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha indica cuando se inicia el periodo de la licencia]]></comment>
+			</column>
+			<column name="fechaTermino" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha indica cuando se termina el periodo de la licencia]]></comment>
+			</column>
+			<column name="idMedico" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Id medico identifica al médico que otorgó la licencia, se relaciona con tabla Médico]]></comment>
+			</column>
+			<column name="diagnostico" type="varchar" length="300" jt="12" mandatory="y" >
+				<comment><![CDATA[Se Almacena el Diagnósticio]]></comment>
+			</column>
+			<column name="fechaTrasnsaccion" type="datetime" jt="93" mandatory="y" >
+				<comment><![CDATA[Fecha de Transaccion]]></comment>
+			</column>
+			<column name="idUsuario" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Usuario reesponsable]]></comment>
+			</column>
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idLicenciaLog" />
+			</index>
+			<index name="idSucursal" unique="NORMAL" >
+				<column name="idSucursal" />
+			</index>
+			<index name="idLicenciaTipo" unique="NORMAL" >
+				<column name="idLicenciaTipo" />
+			</index>
+			<index name="idLicenciaFormaPresenta" unique="NORMAL" >
+				<column name="idLicenciaFormaPresenta" />
+			</index>
+			<index name="idTrabajador" unique="NORMAL" >
+				<column name="idTrabajador" />
+			</index>
+			<index name="idEmpresa" unique="NORMAL" >
+				<column name="idEmpresa" />
+			</index>
+			<index name="idMedico" unique="NORMAL" >
+				<column name="idMedico" />
+			</index>
+			<fk name="log_licencia_ibfk_1" to_schema="adminlicencias" to_table="sucursal" >
+				<fk_column name="idSucursal" pk="idSucursal" />
+			</fk>
+			<fk name="log_licencia_ibfk_2" to_schema="adminlicencias" to_table="licencia_tipo" >
+				<fk_column name="idLicenciaTipo" pk="idLicenciaTipo" />
+			</fk>
+			<fk name="log_licencia_ibfk_3" to_schema="adminlicencias" to_table="licencia_formapresenta" >
+				<fk_column name="idLicenciaFormaPresenta" pk="idLicenciaFormaPresenta" />
+			</fk>
+			<fk name="log_licencia_ibfk_4" to_schema="adminlicencias" to_table="trabajador" >
+				<fk_column name="idTrabajador" pk="idTrabajador" />
+			</fk>
+			<fk name="log_licencia_ibfk_5" to_schema="adminlicencias" to_table="empresa" >
+				<fk_column name="idEmpresa" pk="idEmpresa" />
+			</fk>
+			<fk name="log_licencia_ibfk_6" to_schema="adminlicencias" to_table="licencia_tramite" >
+				<fk_column name="idLicenciaLog" pk="idLicenciaTramite" />
+			</fk>
+			<fk name="log_licencia_ibfk_7" to_schema="adminlicencias" to_table="medico" >
+				<fk_column name="idMedico" pk="idMedico" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
 		<table name="medico" row_count="0" spec="" >
 			<column name="idMedico" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Registro de Medico]]></comment>
 			</column>
-			<column name="nombreMedico" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="idEspecialidad" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="nombreMedico" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[nombre del Médico]]></comment>
+			</column>
+			<column name="idEspecialidad" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id especialidad medica - se relaciona con tabla referencial especialidad]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idMedico" />
 			</index>
 			<index name="idEspecialidad" unique="NORMAL" >
 				<column name="idEspecialidad" />
 			</index>
-			<fk name="medico_ibfk_1" to_schema="adminLicencias" to_table="especialidad" >
+			<fk name="medico_ibfk_1" to_schema="adminlicencias" to_table="especialidad" >
 				<fk_column name="idEspecialidad" pk="idEspecialidad" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
@@ -223,19 +428,53 @@
 		<table name="provincia" row_count="54" spec="" >
 			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Id del registro de provincias]]></comment>
 			</column>
-			<column name="nombreProvincia" type="varchar" length="64" jt="12" mandatory="y" />
-			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" />
+			<column name="nombreProvincia" type="varchar" length="64" jt="12" mandatory="y" >
+				<comment><![CDATA[nombre de la provincia]]></comment>
+			</column>
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" >
+				<comment><![CDATA[id Region, relaciona a la provincia con la tabla región]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idProvincia" />
 			</index>
 			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8]]></options>
 		</table>
-		<table name="rechazo_Causal" row_count="7" spec="" >
+		<table name="recepcion_documentos" spec="" >
+			<column name="idRecepcionDocumentos" type="tinyint" length="3" jt="-6" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id del registro de la sucursal que puede recepcionar documentos]]></comment>
+			</column>
+			<column name="describeRecepcionDocumentos" type="varchar" length="50" jt="12" >
+				<comment><![CDATA[Describe Recepción Documental]]></comment>
+			</column>
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idRecepcionDocumentos" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="rechazo_documento_causal" spec="" >
+			<column name="idCausalRechazo" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Registro causal rechazo Documento]]></comment>
+			</column>
+			<column name="describeRechazoDocumentoCausal" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[describe Causal rechazo Documental]]></comment>
+			</column>
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idCausalRechazo" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="rechazo_licencia_causal" spec="" >
 			<column name="idRechazoCausal" type="int" length="11" jt="4" mandatory="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id registro causal rechazo licencia]]></comment>
 			</column>
-			<column name="decribeRechazoCausal" type="varchar" length="50" jt="12" mandatory="y" />
+			<column name="decribeRechazoCausal" type="varchar" length="50" jt="12" mandatory="y" >
+				<comment><![CDATA[Describe Causal rechazo Licencia]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idRechazoCausal" />
 			</index>
@@ -244,9 +483,14 @@
 		<table name="region" row_count="16" spec="" >
 			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Registro de Region]]></comment>
 			</column>
-			<column name="nombreRegion" type="varchar" length="64" jt="12" mandatory="y" />
-			<column name="ordinalRegion" type="varchar" length="4" jt="12" mandatory="y" />
+			<column name="nombreRegion" type="varchar" length="64" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre de la región]]></comment>
+			</column>
+			<column name="ordinalRegion" type="varchar" length="4" jt="12" mandatory="y" >
+				<comment><![CDATA[Numerel Romano que se le asigna a la region]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idRegion" />
 			</index>
@@ -255,11 +499,24 @@
 		<table name="sucursal" row_count="0" spec="" >
 			<column name="idSucursal" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Registro Sucursal]]></comment>
 			</column>
-			<column name="describeSucursal" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" />
-			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
+			<column name="describeSucursal" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre de la Sucursal]]></comment>
+			</column>
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id región a la que pertenece]]></comment>
+			</column>
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" >
+				<comment><![CDATA[id Provincia a la que pertenece]]></comment>
+			</column>
+			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id comuna a la que pertenece]]></comment>
+			</column>
+			<column name="idRecepcionDocumentos" type="tinyint" length="3" jt="-6" mandatory="y" unsigned="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[id Recepcion Documental si esta o no Apata para el proceso]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idSucursal" />
 			</index>
@@ -272,49 +529,103 @@
 			<index name="idComuna" unique="NORMAL" >
 				<column name="idComuna" />
 			</index>
-			<fk name="sucursal_ibfk_1" to_schema="adminLicencias" to_table="region" >
+			<index name="idRecepcionDocumentos" unique="NORMAL" >
+				<column name="idRecepcionDocumentos" />
+			</index>
+			<fk name="sucursal_ibfk_1" to_schema="adminlicencias" to_table="region" >
 				<fk_column name="idRegion" pk="idRegion" />
 			</fk>
-			<fk name="sucursal_ibfk_2" to_schema="adminLicencias" to_table="provincia" >
+			<fk name="sucursal_ibfk_2" to_schema="adminlicencias" to_table="provincia" >
 				<fk_column name="idProvincia" pk="idProvincia" />
 			</fk>
-			<fk name="sucursal_ibfk_3" to_schema="adminLicencias" to_table="comuna" >
+			<fk name="sucursal_ibfk_3" to_schema="adminlicencias" to_table="comuna" >
 				<fk_column name="idComuna" pk="idComuna" />
+			</fk>
+			<fk name="sucursal_ibfk_4" to_schema="adminlicencias" to_table="recepcion_documentos" >
+				<fk_column name="idRecepcionDocumentos" pk="idRecepcionDocumentos" />
 			</fk>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
 		<table name="trabajador" row_count="0" spec="" >
 			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Registro del Trabajador]]></comment>
 			</column>
-			<column name="rutTrabajador" type="varchar" length="10" jt="12" mandatory="y" />
-			<column name="nombreTrabajador" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="domicilio" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" />
-			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" />
-			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" />
-			<column name="fechaNacimiento" type="date" jt="91" mandatory="y" />
+			<column name="rutTrabajador" type="varchar" length="10" jt="12" mandatory="y" >
+				<comment><![CDATA[Rut del Trabajador]]></comment>
+			</column>
+			<column name="nombreTrabajador" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre del Trabajador]]></comment>
+			</column>
+			<column name="domicilio" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Domicilio del Trabajador]]></comment>
+			</column>
+			<column name="idRegion" type="int" length="10" jt="4" mandatory="y" >
+				<comment><![CDATA[id Región a la que pertenece el domicilio del trabajador]]></comment>
+			</column>
+			<column name="idProvincia" type="int" length="10" jt="4" mandatory="y" >
+				<comment><![CDATA[id provincia a la que pertenece domicilio del trabajador]]></comment>
+			</column>
+			<column name="idComuna" type="int" length="10" jt="4" mandatory="y" >
+				<comment><![CDATA[id comuna a la que pertenece el domicilio del trabajador]]></comment>
+			</column>
+			<column name="fechaNacimiento" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha de Nacimiento del Trabajador]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idTrabajador" />
 			</index>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
-		<table name="trabajador_Afiliado" spec="" >
+		<table name="trabajador_afiliado" prior="trabajador_Afiliado" spec="" >
 			<column name="idTrabajadorAfiliado" type="bigint" length="20" jt="-5" mandatory="y" unsigned="y" >
 				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Afiliación del Trabajador]]></comment>
 			</column>
-			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" />
-			<column name="fechaInicio" type="date" jt="91" mandatory="y" />
-			<column name="fechaTermino" type="date" jt="91" />
+			<column name="idTrabajador" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[id Trabajador - relacionado con tabla Trabajador]]></comment>
+			</column>
+			<column name="fechaInicio" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[Fecha inicial en que se encuentra afiliado]]></comment>
+			</column>
+			<column name="fechaTermino" type="date" jt="91" >
+				<comment><![CDATA[Fecha final en que se encuentra afiliado]]></comment>
+			</column>
 			<index name="primarykey" unique="PRIMARY_KEY" >
 				<column name="idTrabajadorAfiliado" />
 			</index>
 			<index name="idTrabajador" unique="NORMAL" >
 				<column name="idTrabajador" />
 			</index>
-			<fk name="trabajador_afiliado_ibfk_1" to_schema="adminLicencias" to_table="trabajador" >
+			<fk name="trabajador_afiliado_ibfk_1" to_schema="adminlicencias" to_table="trabajador" >
 				<fk_column name="idTrabajador" pk="idTrabajador" />
 			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
+		</table>
+		<table name="usuario" spec="" >
+			<column name="idUsuario" type="int" length="10" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[id Registro de Usuario]]></comment>
+			</column>
+			<column name="cuentaUsuario" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[cuenta del usuario para login]]></comment>
+			</column>
+			<column name="apellidoPaterno" type="varchar" length="20" jt="12" mandatory="y" >
+				<comment><![CDATA[Apellido Paterno del usuario]]></comment>
+			</column>
+			<column name="apellidoMaterno" type="varchar" length="20" jt="12" mandatory="y" >
+				<comment><![CDATA[Apellido Materno del usuario]]></comment>
+			</column>
+			<column name="nombres" type="varchar" length="30" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombres del usuario]]></comment>
+			</column>
+			<column name="Activo" type="tinyint" length="3" jt="-6" mandatory="y" unsigned="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Estado del usuario ( 1 - Activo / 0 Inactivo )]]></comment>
+			</column>
+			<index name="primarykey" unique="PRIMARY_KEY" >
+				<column name="idUsuario" />
+			</index>
 			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]]></options>
 		</table>
 		<procedure name="sp_EstadisticasTipoLicencia" id="Procedure-2482" isSystem="false" params_known="n" >
@@ -330,6 +641,114 @@ BEGIN
 		INNER JOIN licencia_Tipo t ON l.idLicenciaTipo = t.idLicenciaTipo
 		GROUP BY l.idLicenciaTipo
 		ORDER BY t.describeLicenciaTipo ;
+    END]]></string>
+		</procedure>
+		<procedure name="sp_ProcesoAlmacenaMayorCantidadLicencias" id="Procedure-24b1" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  PROCEDURE `sp_ProcesoAlmacenaMayorCantidadLicencias`()
+BEGIN
+		/*
+			Se Pide Los estados del proceso que Almacenan la Mayor cantidad de Licencias
+		*/
+		
+		SELECT w.describeLicenciaWorkFlow 	,
+		       COUNT(*) AS cantidadLicencia
+		FROM   licencia_Tramite t
+		INNER  JOIN licencia_Workflow w ON t.idLicenciaWorkflow = w.idLicenciaWorkflow
+		WHERE  idLicenciaTramite = ( SELECT MAX( idLicenciaTramite ) 
+					     FROM  licencia_Tramite q
+					     GROUP BY  t.idLicencia )
+		GROUP BY t.idLicenciaWorkflow
+		ORDER BY cantidadLicencia DESC ;
+    END]]></string>
+		</procedure>
+		<procedure name="sp_SucursalMasDocumentosSucursalNoApta" id="Procedure-10c6" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  PROCEDURE `sp_SucursalMasDocumentosSucursalNoApta`()
+BEGIN
+			/*
+				Se pide: Las Sucursales que reciben mas documentacion segmentados por region o Comuna,
+				asi como sucursales que no están aptas para recibir documentacion
+				
+			*/
+			
+			SELECT  nombreComuna		,
+				idComuna		,
+				Documentos		,
+				describeRecepcionDocumentos
+			FROM  (
+						
+					SELECT 	c.nombreComuna		,
+						s.idComuna		,
+						COUNT(*) AS Documentos	,
+						r.describeRecepcionDocumentos
+					FROM    sucursal s
+					INNER   JOIN licencia  l 		ON s.idSucursal = l.idSucursal
+					INNER   JOIN comuna    c 		ON s.idComuna = c.idComuna 
+					INNER   JOIN recepcion_Documentos r 	ON s.idRecepcionDocumentos = r.idRecepcionDocumentos
+					WHERE   s.idRecepcionDocumentos = 1 
+					GROUP BY s.idComuna 
+					 
+					UNION 
+						  
+					SELECT 	c.nombreComuna		,
+						s.idComuna		,
+						0 AS Documentos		,
+						r.describeRecepcionDocumentos
+					FROM    sucursal s
+					INNER   JOIN licencia  l ON s.idSucursal = l.idSucursal
+					INNER   JOIN comuna    c ON s.idComuna = c.idComuna 
+					INNER   JOIN recepcion_Documentos r ON  s.idRecepcionDocumentos = r.idRecepcionDocumentos
+					WHERE   s.idRecepcionDocumentos = 2
+					GROUP BY s.idComuna  
+				
+				) As Salida
+				
+			ORDER BY Documentos DESC;
+	
+    END]]></string>
+		</procedure>
+		<procedure name="sp_Tiempos_Promedio_Min_Max_Tramite" id="Procedure-b8e" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  PROCEDURE `sp_Tiempos_Promedio_Min_Max_Tramite`()
+BEGIN
+	/*
+		Se Pide: Tiempos promedio, Minimos y Maximos, desde el inicio del proceso hasta el calculo del monto a pagar 
+	*/
+	SELECT 	
+		MIN( DATEDIFF( fechaMax , fechaIni ) ) AS TiempoMinimo		,
+		AVG( DATEDIFF( fechaMax , fechaIni ) ) AS TiempoPromedio	,
+		MAX( DATEDIFF( fechaMax , fechaIni ) ) AS TiempoMaximo
+	FROM (
+		SELECT   
+			 ( SELECT t.fechaTramite
+			   FROM   licencia_Tramite t
+			   WHERE  t.idLicencia = l.idLicencia AND idLicenciaWorkflow = 1) AS fechaIni , /* Inicio Tramite */
+			   
+			 ( SELECT t.fechaTramite
+			   FROM   licencia_Tramite t
+			   WHERE  t.idLicencia = l.idLicencia AND idLicenciaWorkflow = 7) AS fechaMax   /* termino del Tramite con el pago */
+				      
+		FROM     licencia_Tramite l
+		WHERE    l.idLicenciaWorkflow = 7 /* Pago de Licencia -  Conjunto que reune a todos los que cumplen proceso completo */
+	      ) AS Resultado ;
+      
+    END]]></string>
+		</procedure>
+		<procedure name="sp_TopDocumentosReiniciaFlujo" id="Procedure-2ea" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  PROCEDURE `sp_TopDocumentosReiniciaFlujo`()
+BEGIN
+		/*
+			Se Pide: Top de documentos que hacen que licencia reinicie su flujo
+		*/
+		SELECT 	   p.idLicenciaDocumento		,
+			   COUNT(*)  AS ranking			,
+			   c.describeRechazoDocumentoCausal 	,
+			   d.describeLicenciaDocumento
+		FROM       licencia_DocumentosPresentados p
+		INNER JOIN licencia_Documento             d ON p.idLicenciaDocumento    = d.idLicenciaDocumento
+		INNER JOIN licencia_DocumentoRechazado    r ON p.idDocumentosPresentado = r.idDocumentoPresentado
+		INNER JOIN rechazo_Documento_Causal       c ON r.idCausalRechazo        = c.idCausalRechazo
+		GROUP BY  idLicenciaDocumento 
+		ORDER BY  ranking DESC ;
+			  
     END]]></string>
 		</procedure>
 		<procedure name="sp_TopEmpresasPresentanLicencias" id="Procedure-1ea7" isSystem="false" params_known="n" >
@@ -348,36 +767,63 @@ BEGIN
 		ORDER BY numeroLicencias DESC ;
     END]]></string>
 		</procedure>
+		<procedure name="sp_TrabajadoreLicenciaDesafiliados" id="Procedure-e3c" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  PROCEDURE `sp_TrabajadoreLicenciaDesafiliados`()
+BEGIN
+		/*
+			Se Pide: Trabajadores que tienen licencia y son desafiliados
+		*/
+		
+		SELECT t.rutTrabajador		, 
+		       t.nombreTrabajador	, 
+		       t.fechaNacimiento	,
+		       l.fechaInicio		,
+		       l.fechaTermino		,
+		       l.diagnostico
+		FROM   trabajador t
+		INNER  JOIN licencia l ON t.idTrabajador = l.idTrabajador
+		WHERE   ( SELECT a.fechaTermino
+			  FROM trabajador_Afiliado a
+			  WHERE  t.idTrabajador = a.idTrabajador
+			  ORDER BY a.idTrabajadorAfiliado DESC ) != NULL ;
+    END]]></string>
+		</procedure>
 	</schema>
-	<connector name="MariaDb" database="MariaDb" driver_class="org.mariadb.jdbc.Driver" driver_jar="mariadb-java-client-2.7.2.jar" driver_desc="Standard" host="10.8.106.181" port="3306" user="admin" passwd="YWRtaW4uMjE=" />
+	<connector name="MariaDb" database="MariaDb" driver_class="org.mariadb.jdbc.Driver" driver_jar="mariadb-java-client-2.7.2.jar" driver_desc="Standard" host="localhost" port="3306" user="root" passwd="ODczMzg3MzM=" />
 	<layout name="Licencia Medica" id="Layout-1b31" show_column_type="y" show_relation="columns" >
-		<entity schema="adminLicencias" name="comuna" color="BED3F4" x="48" y="224" />
-		<entity schema="adminLicencias" name="empresa" color="BED3F4" x="864" y="384" />
-		<entity schema="adminLicencias" name="especialidad" color="BED3F4" x="1008" y="160" />
-		<entity schema="adminLicencias" name="licencia" color="BED3F4" x="560" y="336" />
-		<entity schema="adminLicencias" name="licencia_Documento" color="C7F4BE" x="1152" y="272" />
-		<entity schema="adminLicencias" name="licencia_FormaPresenta" color="C7F4BE" x="352" y="592" />
-		<entity schema="adminLicencias" name="licencia_Rechazada" color="3986C1" x="528" y="768" />
-		<entity schema="adminLicencias" name="licencia_Tipo" color="C7F4BE" x="912" y="560" />
-		<entity schema="adminLicencias" name="licencia_Tramite" color="C7F4BE" x="688" y="592" />
-		<entity schema="adminLicencias" name="licencia_Workflow" color="3986C1" x="976" y="704" />
-		<entity schema="adminLicencias" name="medico" color="BED3F4" x="864" y="256" />
-		<entity schema="adminLicencias" name="provincia" color="BED3F4" x="272" y="224" />
-		<entity schema="adminLicencias" name="rechazo_Causal" color="BED3F4" x="1152" y="384" />
-		<entity schema="adminLicencias" name="region" color="BED3F4" x="256" y="336" />
-		<entity schema="adminLicencias" name="sucursal" color="BED3F4" x="688" y="48" />
-		<entity schema="adminLicencias" name="trabajador" color="BED3F4" x="80" y="464" />
-		<entity schema="adminLicencias" name="trabajador_Afiliado" color="3986C1" x="288" y="704" />
+		<entity schema="adminlicencias" name="comuna" color="BED3F4" x="64" y="272" />
+		<entity schema="adminlicencias" name="empresa" color="BED3F4" x="880" y="432" />
+		<entity schema="adminlicencias" name="especialidad" color="BED3F4" x="1024" y="208" />
+		<entity schema="adminlicencias" name="licencia" color="BED3F4" x="576" y="384" />
+		<entity schema="adminlicencias" name="licencia_documento" color="C7F4BE" x="1168" y="320" />
+		<entity schema="adminlicencias" name="licencia_documentorechazado" color="3986C1" x="800" y="768" />
+		<entity schema="adminlicencias" name="licencia_documentospresentados" color="3986C1" x="1248" y="624" />
+		<entity schema="adminlicencias" name="licencia_formapresenta" color="C7F4BE" x="368" y="640" />
+		<entity schema="adminlicencias" name="licencia_rechazada" color="3986C1" x="544" y="816" />
+		<entity schema="adminlicencias" name="licencia_tipo" color="C7F4BE" x="928" y="608" />
+		<entity schema="adminlicencias" name="licencia_tramite" color="C7F4BE" x="704" y="640" />
+		<entity schema="adminlicencias" name="licencia_workflow" color="3986C1" x="1088" y="800" />
+		<entity schema="adminlicencias" name="log_licencia" color="3986C1" x="464" y="1024" />
+		<entity schema="adminlicencias" name="medico" color="BED3F4" x="880" y="304" />
+		<entity schema="adminlicencias" name="provincia" color="BED3F4" x="288" y="272" />
+		<entity schema="adminlicencias" name="recepcion_documentos" color="3986C1" x="848" y="992" />
+		<entity schema="adminlicencias" name="rechazo_documento_causal" color="3986C1" x="848" y="1104" />
+		<entity schema="adminlicencias" name="rechazo_licencia_causal" color="3986C1" x="1248" y="480" />
+		<entity schema="adminlicencias" name="region" color="BED3F4" x="272" y="384" />
+		<entity schema="adminlicencias" name="sucursal" color="BED3F4" x="640" y="48" />
+		<entity schema="adminlicencias" name="trabajador" color="BED3F4" x="96" y="512" />
+		<entity schema="adminlicencias" name="trabajador_afiliado" color="3986C1" x="304" y="752" />
+		<entity schema="adminlicencias" name="usuario" color="3986C1" x="48" y="896" />
 		<script name="SQL Editor" id="Editor-169a" language="SQL" >
 			<string><![CDATA[SELECT comuna_id, comuna_nombre, provincia_id
 FROM
 	`adminLicencias`.comuna a;]]></string>
 		</script>
 		<browser id="Browse-23a3" name="Relational Data Explorer" confirm_updates="y" >
-			<browse_table schema="adminLicencias" entity="comuna" x="20" y="20" width="400" height="300" />
+			<browse_table schema="adminlicencias" entity="comuna" x="20" y="20" width="400" height="300" />
 		</browser>
 		<query id="Query-810" name="Query Builder" >
-			<query_table schema="adminLicencias" name="comuna" alias="c" x="48" y="48" />
+			<query_table schema="adminlicencias" name="comuna" alias="c" x="48" y="48" />
 		</query>
 		<form name="Analytic Application" id="Report-d46" template="Page" css="container-fluid" view="frame" >
 			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
@@ -388,7 +834,7 @@ FROM
 				<cell type="chart" name="Pie" template="Pie" pos="0,2,4,2,l,c" max_records="20" >
 					<form_script type="DataSource" language="SQL" >
 						<var name="comuna_id" type="4" />
-						<var name="comuna_nombre" />
+						<var name="comuna_nombre" type="-1" />
 						<var name="provincia_id" type="4" />
 						<script ><![CDATA[SELECT * FROM `adminLicencias`.comuna]]></script>
 					</form_script>
@@ -401,7 +847,7 @@ FROM
 				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,3,4,3,f,f" layout="{{-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
 					<form_script type="DataSource" language="SQL" >
 						<var name="comuna_id" type="4" />
-						<var name="comuna_nombre" />
+						<var name="comuna_nombre" type="-1" />
 						<var name="provincia_id" type="4" />
 						<script ><![CDATA[SELECT * FROM `adminLicencias`.comuna]]></script>
 					</form_script>
